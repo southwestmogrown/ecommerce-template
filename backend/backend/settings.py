@@ -121,6 +121,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Tell Django where to find images to serve
+MEDIA_URL = '/images/'
+
+# Connect to static directory
+STATICFILES_DIRS = [
+  BASE_DIR / 'static'
+]
+
+# Tell Django to upload images to the static/images directory
+MEDIA_ROOT = 'static/images'
+
 CORS_ALLOWED_ORIGINS = [
   'http://127.0.0.1:5173'
 ]

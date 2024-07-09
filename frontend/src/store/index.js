@@ -6,10 +6,12 @@ import {
 } from "redux";
 
 import { thunk } from "redux-thunk";
-import productReducer from "./products";
+import productsListReducer from "./productsList";
+import productDetailsReducer from "./productDetails";
 
 const rootReducer = combineReducers({
-  productStore: productReducer,
+  productList: productsListReducer,
+  productDetails: productDetailsReducer,
 });
 
 let enhancer;

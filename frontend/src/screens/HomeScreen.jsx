@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
-import { listProducts } from "../store/products";
+import { listProducts } from "../store/productsList";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 function HomeScreen() {
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productStore);
+  const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
 
-  console.log(error);
   useEffect(() => {
     async function fetchProducts() {
       await dispatch(listProducts());

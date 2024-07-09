@@ -8,7 +8,7 @@ export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get("/api/nothing");
+    const { data } = await axios.get("/api/products");
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -21,7 +21,7 @@ export const listProducts = () => async (dispatch) => {
   }
 };
 
-const productReducer = (state = { products: [] }, action) => {
+const productsListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST: {
       return { loading: true, products: [] };
@@ -37,4 +37,4 @@ const productReducer = (state = { products: [] }, action) => {
   }
 };
 
-export default productReducer;
+export default productsListReducer;

@@ -36,3 +36,4 @@ def getProduct(request, id):
   serializer = ProductSerializer(product, many=False)
 
   return Response(serializer.data)
+

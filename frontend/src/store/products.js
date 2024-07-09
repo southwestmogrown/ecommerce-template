@@ -1,25 +1,36 @@
 import axios from "axios";
 
-const LOAD_PRODUCTS = "products/LOAD_PRODUCTS";
+const PRODUCT_LIST_REQUEST = "products/PRODUCT_LIST_REQUEST";
+const PRODUCT_LIST_SUCCESS = "products/PRODUCT_LIST_SUCCESS";
+const PRODUCT_LIST_FAIL = "products/PRODUCT_LIST_FAIL";
 
-const loadProducts = (data) => ({
-  type: LOAD_PRODUCTS,
-  payload: data,
-});
+export const listProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST });
 
-export const thunkLoadProducts = () => async (dispatch) => {
-  const { data } = await axios.get("/api/products");
-
-  await dispatch(loadProducts(data));
-  return data;
+    const { data } = await axios.get("/api/nothing");
+    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 const productReducer = (state = { products: [] }, action) => {
   switch (action.type) {
-    case LOAD_PRODUCTS: {
-      const newState = { ...state };
-      newState.products = action.payload;
-      return newState;
+    case PRODUCT_LIST_REQUEST: {
+      return { loading: true, products: [] };
+    }
+    case PRODUCT_LIST_SUCCESS: {
+      return { loading: false, products: action.payload };
+    }
+    case PRODUCT_LIST_FAIL: {
+      return { loading: false, error: action.payload };
     }
     default:
       return state;

@@ -8,10 +8,12 @@ import {
 import { thunk } from "redux-thunk";
 import productsListReducer from "./productsList";
 import productDetailsReducer from "./productDetails";
+import cartReducer from "./cart";
 
 const rootReducer = combineReducers({
   productList: productsListReducer,
   productDetails: productDetailsReducer,
+  cart: cartReducer,
 });
 
 let enhancer;

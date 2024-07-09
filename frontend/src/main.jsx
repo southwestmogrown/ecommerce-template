@@ -7,7 +7,15 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import configureStore from "./store";
 
-const store = configureStore();
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+
+const initialState = {
+  cart: { cartItems: cartItemsFromStorage },
+};
+
+const store = configureStore(initialState);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

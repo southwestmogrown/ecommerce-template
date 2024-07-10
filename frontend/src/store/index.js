@@ -14,7 +14,7 @@ import usersLoginReducer, {
   userUpdateProfileReducer,
   usersRegisterReducer,
 } from "./users";
-import orderCreateReducer from "./orders";
+import orderCreateReducer, { orderDetailsReducer } from "./orders";
 
 const rootReducer = combineReducers({
   productList: productsListReducer,
@@ -25,6 +25,7 @@ const rootReducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdate: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
 });
 
 let enhancer;

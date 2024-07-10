@@ -4,6 +4,7 @@ const CART_ADD_ITEM = "cart/CART_ADD_ITEM";
 const CART_REMOVE_ITEM = "cart/CART_REMOVE_ITEM";
 const CART_SAVE_SHIPPING_ADDRESS = "cart/CART_SAVE_SHIPPING_ADDRESS";
 const CART_SAVE_PAYMENT_METHOD = "cart/CART_SAVE_PAYMENT_METHOD";
+export const CART_CLEAR_ITEMS = "cart/CART_CLEAR_ITEMS";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
@@ -88,6 +89,12 @@ const cartReducer = (
       return {
         ...state,
         paymentMethod: action.payload,
+      };
+    }
+    case CART_CLEAR_ITEMS: {
+      return {
+        ...state,
+        cartItems: [],
       };
     }
     default:

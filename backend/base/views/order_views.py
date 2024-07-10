@@ -48,7 +48,23 @@ def addOrderItems(request):
       )
 
       #4 Update Stock
-      product.countInStock -= item.qty
+      product.countInStock -= int(item.qty)
       product.save()
-  serializer = OrderSerializer(order, many=False)
-  return Response(serializer.data)
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)
+  
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getOrderById(request, id):
+  user = request.user
+  print(id)
+  try:
+    order = Order.objects.get(_id=int(id))
+    print(order)
+    if user.is_staff or order.user == user:
+      serializer = OrderSerializer(order, many=False)
+      return Response(serializer.data)
+    else:
+      Response({'detail': 'Not Authorized'}, status=status.HTTP_400_BAD_REQUEST)
+  except:
+    return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)

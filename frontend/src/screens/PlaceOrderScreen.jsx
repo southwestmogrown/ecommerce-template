@@ -1,13 +1,19 @@
-import { useState } from "react";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { useNavigate } from "react-router-dom";
+import { ORDER_CREATE_RESET, createOrder } from "../store/orders";
+import { useEffect } from "react";
 
 function PlaceOrderScreen() {
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, error, success } = orderCreate;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const cart = useSelector((state) => state.cart);
   const { cartItems, shippingAddress, paymentMethod } = cart;
 
@@ -24,8 +30,29 @@ function PlaceOrderScreen() {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
+
+  useEffect(() => {
+    if (!cart.paymentMethod) {
+      navigate("/payment");
+    }
+    if (success) {
+      navigate(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [success, navigate]);
+
   const placeOrder = () => {
-    console.log("Order Placed!");
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        shippingAddress: shippingAddress,
+        paymentMethod: paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
   return (
     <main>
@@ -111,6 +138,9 @@ function PlaceOrderScreen() {
                   <Col>Total: </Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item className="d-grid gap-2">
                 <Button

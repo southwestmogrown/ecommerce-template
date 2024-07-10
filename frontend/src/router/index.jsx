@@ -3,6 +3,8 @@ import App from "../App";
 import Layout from "./Layout";
 import ProductScreen from "../screens/ProductScreen";
 import CartScreen from "../screens/CartScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 export const router = createBrowserRouter([
   {
@@ -14,12 +16,20 @@ export const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "products/:id",
+        path: "products/:id/",
         element: <ProductScreen />,
       },
       {
-        path: "cart/:id?",
+        path: "cart/:id?/",
         element: <CartScreen />,
+      },
+      {
+        path: "login/",
+        element: <LoginScreen />,
+      },
+      {
+        path: "register/",
+        element: <RegisterScreen />,
       },
     ],
   },

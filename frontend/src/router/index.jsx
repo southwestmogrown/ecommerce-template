@@ -5,6 +5,8 @@ import ProductScreen from "../screens/ProductScreen";
 import CartScreen from "../screens/CartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import ShippingScreen from "../screens/ShippingScreen";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,18 @@ export const router = createBrowserRouter([
       {
         path: "register/",
         element: <RegisterScreen />,
+      },
+      {
+        path: "profile/",
+        element: <ProfileScreen />,
+      },
+      {
+        path: "shipping/",
+        element: <ShippingScreen />,
+      },
+      {
+        path: "payment/",
+        element: <h1>Payment</h1>,
       },
     ],
   },

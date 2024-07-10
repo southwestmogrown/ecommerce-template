@@ -4,15 +4,19 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { logout } from "../store/users";
+import { logout, USER_DETAILS_RESET } from "../store/users";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
+    dispatch({ type: USER_DETAILS_RESET });
+    navigate("/");
   };
 
   return (

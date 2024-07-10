@@ -9,13 +9,20 @@ import { thunk } from "redux-thunk";
 import productsListReducer from "./productsList";
 import productDetailsReducer from "./productDetails";
 import cartReducer from "./cart";
-import usersReducer from "./users";
+import usersLoginReducer, {
+  userDetailsReducer,
+  userUpdateProfileReducer,
+  usersRegisterReducer,
+} from "./users";
 
 const rootReducer = combineReducers({
   productList: productsListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
-  userLogin: usersReducer,
+  userLogin: usersLoginReducer,
+  userRegister: usersRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdate: userUpdateProfileReducer,
 });
 
 let enhancer;

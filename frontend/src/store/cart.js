@@ -3,6 +3,7 @@ import axios from "axios";
 const CART_ADD_ITEM = "cart/CART_ADD_ITEM";
 const CART_REMOVE_ITEM = "cart/CART_REMOVE_ITEM";
 const CART_SAVE_SHIPPING_ADDRESS = "cart/CART_SAVE_SHIPPING_ADDRESS";
+const CART_SAVE_PAYMENT_METHOD = "cart/CART_SAVE_PAYMENT_METHOD";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
@@ -37,7 +38,16 @@ export const saveShippingAddress = (data) => async (dispatch) => {
     payload: data,
   });
 
-  localStorage.setItem("cartItems", JSON.stringify(data));
+  localStorage.setItem("shippingAddress", JSON.stringify(data));
+};
+
+export const savePaymentMethod = (data) => async (dispatch) => {
+  dispatch({
+    type: CART_SAVE_PAYMENT_METHOD,
+    payload: data,
+  });
+
+  localStorage.setItem("paymentMethod", JSON.stringify(data));
 };
 
 const cartReducer = (
@@ -72,6 +82,12 @@ const cartReducer = (
       return {
         ...state,
         shippingAddress: action.payload,
+      };
+    }
+    case CART_SAVE_PAYMENT_METHOD: {
+      return {
+        ...state,
+        paymentMethod: action.payload,
       };
     }
     default:
